@@ -35,3 +35,40 @@ function updateSnow() {
   requestAnimationFrame(updateSnow);
 }
 updateSnow();
+  const canvas = document.getElementById('snow');
+const ctx = canvas.getContext('2d');
+let flakes = [];
+
+function resize() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+window.addEventListener('resize', resize);
+resize();
+
+function createFlake() {
+  return {
+    x: Math.random() * canvas.width,
+    y: Math.random() * -50,
+    size: Math.random() * 4 + 1,
+    speed: Math.random() * 1 + 0.5,
+    opacity: Math.random() * 0.5 + 0.3
+  };
+}
+
+function updateSnow() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if (flakes.length < 150) flakes.push(createFlake());
+
+  for (let flake of flakes) {
+    flake.y += flake.speed;
+    if (flake.y > canvas.height) flake.y = -flake.size;
+    ctx.beginPath();
+    ctx.arc(flake.x, flake.y, flake.size, 0, Math.PI * 2);
+    ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
+    ctx.fill();
+  }
+  requestAnimationFrame(updateSnow);
+}
+updateSnow();
+
