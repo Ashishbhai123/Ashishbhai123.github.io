@@ -1,74 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
 
-const canvas = document.getElementById('snow');
-const ctx = canvas.getContext('2d');
-let flakes = [];
-
-function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resize);
-resize();
-
-function createFlake() {
-  return {
-    x: Math.random() * canvas.width,
-    y: Math.random() * -50,
-    size: Math.random() * 4 + 1,
-    speed: Math.random() * 1 + 0.5,
-    opacity: Math.random() * 0.5 + 0.3
-  };
+body {
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(to bottom right, #d6c6f2, #bcaef0);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 }
 
-function updateSnow() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  if (flakes.length < 150) flakes.push(createFlake());
-
-  for (let flake of flakes) {
-    flake.y += flake.speed;
-    if (flake.y > canvas.height) flake.y = -flake.size;
-    ctx.beginPath();
-    ctx.arc(flake.x, flake.y, flake.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
-    ctx.fill();
-  }
-  requestAnimationFrame(updateSnow);
-}
-updateSnow();
-  const canvas = document.getElementById('snow');
-const ctx = canvas.getContext('2d');
-let flakes = [];
-
-function resize() {
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resize);
-resize();
-
-function createFlake() {
-  return {
-    x: Math.random() * canvas.width,
-    y: Math.random() * -50,
-    size: Math.random() * 4 + 1,
-    speed: Math.random() * 1 + 0.5,
-    opacity: Math.random() * 0.5 + 0.3
-  };
+.container {
+  text-align: center;
+  color: white;
+  z-index: 2;
+  position: relative;
 }
 
-function updateSnow() {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-  if (flakes.length < 150) flakes.push(createFlake());
-
-  for (let flake of flakes) {
-    flake.y += flake.speed;
-    if (flake.y > canvas.height) flake.y = -flake.size;
-    ctx.beginPath();
-    ctx.arc(flake.x, flake.y, flake.size, 0, Math.PI * 2);
-    ctx.fillStyle = `rgba(255, 255, 255, ${flake.opacity})`;
-    ctx.fill();
-  }
-  requestAnimationFrame(updateSnow);
+.profile-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(255, 255, 255, 0.8);
+  margin-bottom: 20px;
 }
-updateSnow();
+
+h1 {
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.links a {
+  display: block;
+  color: white;
+  text-decoration: none;
+  font-weight: 500;
+  margin: 8px 0;
+  transition: 0.3s;
+}
+
+.links a:hover {
+  color: #e6e6ff;
+  transform: scale(1.05);
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+}
+
 
