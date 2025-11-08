@@ -1,49 +1,87 @@
-const canvas = document.getElementById('snow');
-const ctx = canvas.getContext('2d');
-let width = window.innerWidth;
-let height = window.innerHeight;
-canvas.width = width;
-canvas.height = height;
-
-const numFlakes = 120;
-const flakes = [];
-
-for (let i = 0; i < numFlakes; i++) {
-  flakes.push({
-    x: Math.random() * width,
-    y: Math.random() * height,
-    r: Math.random() * 3 + 1,
-    d: Math.random() + 1,
-  });
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #9b59b6, #8e44ad);
+    overflow: hidden;
 }
 
-function drawFlakes() {
-  ctx.clearRect(0, 0, width, height);
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.8)';
-  ctx.beginPath();
-  for (let i = 0; i < numFlakes; i++) {
-    const f = flakes[i];
-    ctx.moveTo(f.x, f.y);
-    ctx.arc(f.x, f.y, f.r, 0, Math.PI * 2, true);
-  }
-  ctx.fill();
-  moveFlakes();
+.container {
+    text-align: center;
+    margin-top: 100px;
+    position: relative;
+    z-index: 2;
 }
 
-let angle = 0;
-
-function moveFlakes() {
-  angle += 0.01;
-  for (let i = 0; i < numFlakes; i++) {
-    const f = flakes[i];
-    f.y += Math.pow(f.d, 2) + 1;
-    f.x += Math.sin(angle) * 1;
-
-    if (f.y > height) {
-      flakes[i] = { x: Math.random() * width, y: 0, r: f.r, d: f.d };
-    }
-  }
+.profile-photo {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    object-fit: cover;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.3);
+    animation: fadeIn 2s ease-out;
 }
 
-setInterval(drawFlakes, 25);
+h1 {
+    color: white;
+    margin-top: 20px;
+    font-size: 2.5em;
+    animation: bounce 2s infinite;
+}
+
+.links a {
+    display: inline-block;
+    margin: 10px;
+    padding: 12px 18px;
+    background-color: #5e3370;
+    color: white;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 0 5px 10px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    perspective: 1000px;
+}
+
+.links a:hover {
+    transform: translateZ(10px) rotateX(5deg) rotateY(5deg);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.5);
+    background-color: #9b59b6;
+}
+
+canvas#snow {
+    position: fixed;
+    top: 0;
+    left: 0;
+    pointer-events: none;
+    z-index: 1;
+}
+
+.thunder {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: transparent;
+    animation: lightning 6s infinite;
+    z-index: 0;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.8); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {transform: translateY(0);}
+    40% {transform: translateY(-20px);}
+    60% {transform: translateY(-10px);}
+}
+
+@keyframes lightning {
+    0%, 97%, 100% { background: transparent; }
+    98% { background: rgba(255,255,255,0.8); }
+    99% { background: transparent; }
+}
+
 
