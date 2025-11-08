@@ -84,5 +84,16 @@ canvas#snow {
     99% { background: transparent; }
 }
 
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+body {
+  background: linear-gradient(-45deg, #9b59b6, #8e44ad, #7b68ee, #b19cd9);
+  background-size: 400% 400%;
+  animation: gradientMove 10s ease infinite;
+}
 
 
