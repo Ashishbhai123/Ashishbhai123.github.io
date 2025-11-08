@@ -1,23 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ashish | Links</title>
-  <link rel="stylesheet" href="style.css" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ashish's Website</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div class="container">
-    <img src="new photo.jpeg" alt="Ashish" class="profile-photo" />
-    <h1>Ashish</h1>
-    <div class="links">
-      <a href="https://x.com/Ashishbhai321" target="_blank">X (Twitter)</a>
-      <a href="https://t.me/Asbhai90" target="_blank">Telegram</a>
-      <a href="https://www.linkedin.com/in/ashishbhai123/" target="_blank">LinkedIn</a>
-      <a href="https://discord.com/users/1173914141417799734" target="_blank">Discord</a>
+    <div class="thunder"></div>
+    <div class="container">
+        <img src="photo.jpeg" alt="Profile Photo" class="profile-photo" />
+        <h1>Ashish</h1>
+        <div class="links">
+            <a href="https://x.com/Ashishbhai321" target="_blank">Twitter</a>
+            <a href="https://t.me/Asbhai90" target="_blank">Telegram</a>
+            <a href="https://www.linkedin.com/in/ashishbhai123/" target="_blank">LinkedIn</a>
+            <a href="https://discord.com/users/1173914141417799734" target="_blank">Discord</a>
+        </div>
     </div>
-  </div>
-  <canvas id="snow"></canvas>
-  <script src="script.js"></script>
+
+    <!-- Snow Canvas -->
+    <canvas id="snow"></canvas>
+
+    <!-- Snow Script -->
+    <script>
+        const canvas = document.getElementById("snow");
+        const ctx = canvas.getContext("2d");
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        let snowflakes = [];
+
+        function createSnowflakes() {
+            for (let i = 0; i < 200; i++) {
+                snowflakes.push({
+                    x: Math.random() * canvas.width,
+                    y: Math.random() * canvas.height,
+                    z: Math.random() * canvas.width,
+                    radius: Math.random() * 2 + 1,
+                    speedY: Math.random() * 1 + 0.5
+                });
+            }
+        }
+
+        function drawSnowflakes() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = "rgba(255, 255, 255, 0.8)";
+            for (let flake of snowflakes) {
+                let scale = canvas.width / (canvas.width + flake.z);
+                ctx.beginPath();
+                ctx.arc(flake.x * scale, flake.y * scale, flake.radius * scale, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            moveSnowflakes();
+            requestAnimationFrame(drawSnowflakes);
+        }
+
+        function moveSnowflakes() {
+            for (let flake of snowflakes) {
+                flake.y += flake.speedY;
+                flake.z -= 0.5;
+                if (flake.y > canvas.height || flake.z < 0) {
+                    flake.y = 0;
+                    flake.x = Math.random() * canvas.width;
+                    flake.z = canvas.width;
+                }
+            }
+        }
+
+        createSnowflakes();
+        drawSnowflakes();
+    </script>
 </body>
 </html>
